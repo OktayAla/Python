@@ -200,7 +200,7 @@ PyColor.geometry("370x310")
 PyColor.configure()
 PyColor.resizable(False, False)
 
-# Renkleri ve düğmeleri oluşturma
+# Renkleri ve düğmeleri oluştur
 satir = 0
 for renk_adi, renk_tonlari in renkler.items():
     # Renk etiketi
