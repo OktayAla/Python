@@ -1,16 +1,12 @@
-####################
-###JARFET ERISKIA###
-####################
-
 import yfinance as yf  # Yahoo Finance'dan veri çekmek için gerekli kütüphane
 import pandas as pd  # Veri işleme ve analiz için pandas kütüphanesi
 import numpy as np  # Nümerik işlemler için numpy kütüphanesi
 from sklearn.preprocessing import MinMaxScaler  # Veriyi ölçeklendirmek için MinMaxScaler
 from tensorflow.keras.models import Sequential  # Keras'tan model oluşturmak için Sequential sınıfı
-from tensorflow.keras.layers import LSTM, Dense, Dropout  # Keras'tan katmanlar (LSTM, Dense, Dropout) import ediliyor
+from tensorflow.keras.layers import LSTM, Dense, Dropout
 import tkinter as tk  # GUI (Grafiksel Kullanıcı Arayüzü) için tkinter kütüphanesi
-from tkinter import messagebox  # Uyarı mesajları göstermek için tkinter'ın messagebox modülü
-from tkinter import ttk  # ttk modülü, daha gelişmiş GUI bileşenleri için
+from tkinter import messagebox
+from tkinter import ttk
 
 
 # Verileri Çekmek
@@ -67,7 +63,7 @@ def identify_support_resistance(data, window=14):
     return support_levels, resistance_levels
 
 
-# Makine Öğrenmesi Modeli
+# Makine öğrenmesi modeli
 def create_model(input_shape):
     """
     LSTM modelini oluşturur.
@@ -85,7 +81,7 @@ def create_model(input_shape):
     return model
 
 
-# Modeli Eğitmek
+# Modeli eğitmek
 def train_model(data, model):
     """
     Modeli verilen verilerle eğitir.
@@ -109,7 +105,7 @@ def train_model(data, model):
     return model
 
 
-# Tahminler Yapmak
+# Model tahmini
 def predict(model, data, scaler):
     """
     Model ile tahmin yapar.
@@ -175,19 +171,16 @@ def analyze():
         return
 
     predicted_price = predict(model, scaled_data, scaler)  # Model ile tahmin yap
-
-    current_price = data['Close'][-1]  # Şu anki fiyatı al
-    predicted_price = predicted_price[0][0]  # Tahmin edilen fiyatı al
-
-    # Potansiyel Alış ve Satış Fiyatları
-    potential_buy_price = support_levels.dropna().iloc[-1]  # En son destek seviyesini al
-    potential_sell_price = resistance_levels.dropna().iloc[-1]  # En son direnç seviyesini al
+    current_price = float(data['Close'].iloc[-1].iloc[0])  # Şu anki fiyatı al
+    predicted_price = float(predicted_price[0][0])  # Tahmin edilen fiyatı al
+    potential_buy_price = float(support_levels.dropna().iloc[-1].iloc[0])  # En son destek seviyesini al
+    potential_sell_price = float(resistance_levels.dropna().iloc[-1].iloc[0])  # En son direnç seviyesini al
 
     # Stop Loss ve Take Profit Fiyatları
     stop_loss_price, take_profit_price = calculate_stop_loss_take_profit(current_price, potential_buy_price,
                                                                          potential_sell_price)
 
-    # Formatlı çıktı
+    # Analiz çıktıları
     messagebox.showinfo("Analiz Sonucu",
                         f"Mevcut Fiyat: {current_price:.5f}\n"  # Mevcut fiyatı göster
                         f"Tahmin Edilen Fiyat: {predicted_price:.5f}\n"  # Tahmin edilen fiyatı göster
