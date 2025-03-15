@@ -1,3 +1,5 @@
+import os
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0" # Tensorflow kütüphanesi uyarısını kapatmak için
 import yfinance as yf  # Yahoo Finance'dan veri çekmek için gerekli kütüphane
 import pandas as pd  # Veri işleme ve analiz için pandas kütüphanesi
 import numpy as np  # Nümerik işlemler için numpy kütüphanesi
