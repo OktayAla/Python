@@ -76,7 +76,7 @@ def create_model(input_shape):
     model.add(Dropout(0.2))  # Overfitting'i önlemek için dropout ekle
     model.add(LSTM(units=50, return_sequences=False))  # İkinci LSTM katmanını ekle
     model.add(Dropout(0.2))  # Yine dropout ekle
-    model.add(Dense(units=1))  # Çıkış katmanı (tek bir çıkış birimi)
+    model.add(Dense(units=1))  # Çıkış katmanı
     model.compile(optimizer='adam', loss='mean_squared_error')  # Modeli 'adam' optimizer ile ve MSE kaybıyla derle
     return model
 
