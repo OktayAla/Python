@@ -1,0 +1,25 @@
+2025-03-16 21:22:57,798 - INFO - EURUSD=X için veri çekiliyor: period=1mo, interval=1h
+2025-03-16 21:23:47,033 - ERROR - Analiz hatasý: JarfeTradingApp.display_results() missing 3 required positional arguments: 'ema_20', 'ema_50', and 'ema_200'
+2025-03-16 21:24:40,505 - ERROR - Analiz hatasý: JarfeTradingApp.display_results() missing 3 required positional arguments: 'ema_20', 'ema_50', and 'ema_200'
+2025-03-16 21:26:23,784 - INFO - EURUSD=X için veri çekiliyor: period=1mo, interval=1h
+2025-03-16 21:26:40,968 - ERROR - Analiz hatasý: name 'ema_20' is not defined
+2025-03-16 21:29:56,888 - INFO - EURUSD=X için veri çekiliyor: period=1mo, interval=1h
+2025-03-16 21:32:48,255 - INFO - EURUSD=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:33:39,069 - INFO - BTC-USD=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:33:42,397 - ERROR - 
+1 Failed download:
+2025-03-16 21:33:42,397 - ERROR - ['BTC-USD=X']: YFPricesMissingError('possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")')
+2025-03-16 21:33:42,402 - ERROR - Veri çekme hatasý: BTC-USD=X için veri bulunamadý.
+2025-03-16 21:33:50,181 - INFO - USDTRY=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:34:01,894 - INFO - USDBTC=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:34:04,550 - ERROR - 
+1 Failed download:
+2025-03-16 21:34:04,550 - ERROR - ['USDBTC=X']: YFPricesMissingError('possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")')
+2025-03-16 21:34:04,553 - ERROR - Veri çekme hatasý: USDBTC=X için veri bulunamadý.
+2025-03-16 21:34:12,735 - INFO - TRYUSD=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:34:22,395 - INFO - GBPTRY=X için veri çekiliyor: period=5d, interval=15m
+2025-03-16 21:34:29,492 - INFO - GBPTRY=X için veri çekiliyor: period=1d, interval=5m
+2025-03-16 21:37:00,832 - INFO - EURUSD=X için veri çekiliyor: period=1d, interval=1m
+2025-03-16 21:37:52,426 - INFO - EURUSD=X için veri çekiliyor: period=1d, interval=1m
+2025-03-16 21:40:30,396 - INFO - EURUSD=X için veri çekiliyor: period=1d, interval=1m
+2025-03-16 21:42:43,769 - INFO - EURUSD=X için veri çekiliyor: period=1d, interval=1m
