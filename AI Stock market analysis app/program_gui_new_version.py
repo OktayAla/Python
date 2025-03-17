@@ -1,5 +1,4 @@
 import os
-
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # Tensorflow kütüphanesi uyarısını kapatmak için
 import yfinance as yf
 import pandas as pd
@@ -20,14 +19,14 @@ from pathlib import Path
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='jarfe_trading.log'
+    filename='oa_eriskia_trading.log'
 )
 
 
-class JarfeTradingApp:
+class EriskiaTrading:
     def __init__(self, root):
         self.root = root
-        self.root.title("JarfeTrading")
+        self.root.title("EriskiaTrading | AI Stock market analysis app v.1.1 ")
         self.root.geometry("800x600")
 
         # Model ve veri depolama
@@ -115,7 +114,7 @@ class JarfeTradingApp:
         viz_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Grafik alanı
-        self.fig, self.ax = plt.subplots(figsize=(6, 4), dpi=100)
+        self.fig, self.ax = plt.subplots(figsize=(8, 6), dpi=120)
         self.canvas = FigureCanvasTkAgg(self.fig, master=viz_frame)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
@@ -371,38 +370,22 @@ class JarfeTradingApp:
             resistance = float(resistance)
             stop_loss = float(stop_loss)
             take_profit = float(take_profit)
+            ema_20 = float(ema_20)
+            ema_50 = float(ema_50)
+            ema_200 = float(ema_200)
 
-            # Sonuç metnini temizle
-            self.result_text.delete(1.0, tk.END)
-
-            # Sonuçları ekle
-            self.result_text.insert(tk.END, f"📊 ANALİZ SONUÇLARI\n\n")
-            self.result_text.insert(tk.END, f"📈 Mevcut Fiyat: {current_price:.5f}\n")
-            self.result_text.insert(tk.END, f"🔮 Tahmin Edilen Fiyat: {predicted_price:.5f}\n")
-
-            # Değişim yüzdesi
+            # Değişim yüzdesi hesapla
             change_pct = ((predicted_price - current_price) / current_price) * 100
             direction = "artış" if change_pct > 0 else "düşüş"
-            self.result_text.insert(tk.END, f"📊 Beklenen Değişim: %{abs(change_pct):.2f} {direction}\n\n")
 
-            # Destek ve direnç seviyeleri
-            self.result_text.insert(tk.END, f"🛑 Destek Seviyesi: {support:.5f}\n")
-            self.result_text.insert(tk.END, f"🚫 Direnç Seviyesi: {resistance:.5f}\n\n")
-
-            # Stop Loss ve Take Profit
-            self.result_text.insert(tk.END, f"🛡️ Stop Loss: {stop_loss:.5f}\n")
-            self.result_text.insert(tk.END, f"💰 Take Profit: {take_profit:.5f}\n\n")
-
-            # Sinyal
+            # Sinyal emojisi
             signal_emoji = "⚖️"
             if signal == "AL":
                 signal_emoji = "🟢"
             elif signal == "SAT":
                 signal_emoji = "🔴"
 
-            self.result_text.insert(tk.END, f"{signal_emoji} İşlem Sinyali: {signal}\n")
-
-            # İşlem tavsiyesi
+            # Tavsiye metni
             advice = ""
             if signal == "AL":
                 advice = f"Alım fırsatı olabilir. Stop Loss: {stop_loss:.5f}, Take Profit: {take_profit:.5f}"
@@ -411,26 +394,34 @@ class JarfeTradingApp:
             else:
                 advice = "Şu an için beklemede kalınabilir. Fiyat hareketlerini takip edin."
 
-            self.result_text.insert(tk.END, f"💡 Tavsiye: {advice}\n")
+            # Sonuç metnini temizle
+            self.result_text.delete(1.0, tk.END)
 
-            # EMA Değerleri
-            self.result_text.insert(tk.END, f"\n📈 EMA Değerleri:\n")
+            # Sonuçları ekle
+            self.result_text.insert(tk.END, "📊 ANALİZ SONUÇLARI\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END,
+                                    f"⏰ Analiz Zamanı: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END, f"{signal_emoji} İşlem Sinyali: {signal}\n")
+            self.result_text.insert(tk.END, f"💡 Tavsiye: {advice}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END, f"📈 Mevcut Fiyat: {current_price:.5f}\n")
+            self.result_text.insert(tk.END, f"🔮 Tahmin Edilen Fiyat: {predicted_price:.5f}\n")
+            self.result_text.insert(tk.END, f"📊 Beklenen Değişim: %{abs(change_pct):.2f} {direction}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END, f"🛑 Destek Seviyesi: {support:.5f}\n")
+            self.result_text.insert(tk.END, f"🚫 Direnç Seviyesi: {resistance:.5f}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END, f"🛡️ Stop Loss: {stop_loss:.5f}\n")
+            self.result_text.insert(tk.END, f"💰 Take Profit: {take_profit:.5f}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
+            self.result_text.insert(tk.END, "📈 EMA Değerleri:\n")
             self.result_text.insert(tk.END, f"20 EMA: {ema_20:.5f}\n")
             self.result_text.insert(tk.END, f"50 EMA: {ema_50:.5f}\n")
             self.result_text.insert(tk.END, f"200 EMA: {ema_200:.5f}\n")
+            self.result_text.insert(tk.END, "-" * 80 + "\n")
 
-            # Sinyal
-            signal_emoji = "⚖️"
-            if signal == "AL":
-                signal_emoji = "🟢"
-            elif signal == "SAT":
-                signal_emoji = "🔴"
-
-            self.result_text.insert(tk.END, f"{signal_emoji} İşlem Sinyali: {signal}\n")
-
-            # Tarih bilgisi
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            self.result_text.insert(tk.END, f"\n⏰ Analiz Zamanı: {current_time}")
         except Exception as e:
             logging.error(f"Sonuç gösterme hatası: {str(e)}")
             self.result_text.delete(1.0, tk.END)
@@ -623,7 +614,8 @@ class JarfeTradingApp:
 if __name__ == "__main__":
     try:
         root = tk.Tk()
-        app = JarfeTradingApp(root)
+        root.state('zoomed')
+        app = EriskiaTrading(root)
         root.mainloop()
     except Exception as e:
         logging.critical(f"Uygulama çalıştırma hatası: {str(e)}")
