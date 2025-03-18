@@ -2,13 +2,12 @@ import customtkinter as ctk
 import os
 import yt_dlp
 from tkinter import messagebox
-from PIL import Image, ImageTk  # Pillow kütüphanesini import et
+from PIL import Image, ImageTk
 
-# Genel tanımlamalar
+# Ana Uygulama
 class PyDownloader(ctk.CTk):
     def __init__(self):
         super().__init__()
-
         self.title("pyDownloader | Youtube MP3 Downloader | OA")
         self.geometry("600x250")
         self.resizable(False, False)
@@ -46,8 +45,10 @@ class PyDownloader(ctk.CTk):
     def indir(self):
         youtube_link = self.video_link.get()
 
-        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+        # Otomatik olarak masaüstüne kayıt et
+        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop") 
 
+        # YouTube video linkini kütüphanede işleme ve indirme seçenekleri
         ydl_opts = {
             'format': 'bestaudio[ext=m4a]/bestaudio',
             'outtmpl': os.path.join(desktop_path, '%(title)s.mp3'),
@@ -55,20 +56,24 @@ class PyDownloader(ctk.CTk):
         }
 
         try:
-            self.status_label.configure(text="İndiriliyor...", text_color="orange")
+            self.status_label.configure(text="İndiriliyor...", text_color="orange") # Durum mesajını güncelle
             self.update()
 
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl: # YouTube video linkini indir
                 ydl.download([youtube_link])
 
-            messagebox.showinfo("Başarılı", "Dosya başarıyla masaüstüne indirildi.")
+            # İndirme tamamlandı mesajı
+            messagebox.showinfo("Başarılı", "Dosya başarıyla masaüstüne indirildi.") 
             self.status_label.configure(text="İndirme Tamamlandı", text_color="green")
+
+        # Hata durumunda hata mesajı
         except Exception as e:
             messagebox.showerror("Hata", f"İndirme sırasında bir hata oluştu: {str(e)}")
             self.status_label.configure(text=f"Hata: {str(e)}", text_color="red")
         finally:
             self.update()
 
+# Uygulamayı çalıştır
 if __name__ == "__main__":
     app = PyDownloader()
     app.mainloop()
